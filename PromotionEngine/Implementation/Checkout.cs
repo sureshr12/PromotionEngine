@@ -8,11 +8,13 @@
     using PromotionEngine.Model;
 
     public class Checkout : ICheckout
-    {        
+    {
+        private readonly IPromotion _promo;
         public readonly Cart cart;
 
         public Checkout()
-        {            
+        {
+            _promo = new Promotion();
             cart = new Cart();
         }
 
@@ -23,9 +25,9 @@
                 return 0;
             }
 
-            //// TODO: Apply promo rules
+            _promo.Apply(cart);
 
-            throw new NotImplementedException();
+            return cart.TotalPrice;
         }
 
         public void Scan(string item)
