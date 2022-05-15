@@ -4,6 +4,7 @@
     using PromotionEngine.Exception;
     using PromotionEngine.Interface;
     using PromotionEngine.Model;
+    using PromotionEngine.Rules;
 
     /// <summary>
     /// Promotion rule engine
@@ -14,7 +15,7 @@
 
         public Promotion()
         {
-            ////Todo: Yet to add rules
+            _rules.Add(new FirstProductRule());
         }
 
         public Cart Apply(Cart cart)
