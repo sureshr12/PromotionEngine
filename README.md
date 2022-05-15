@@ -31,6 +31,8 @@ I have used below design pattern
 
 Rules Engine pattern
 
+![alt text](https://github.com/sureshr12/PromotionEngine/blob/main/RulesPattern.PNG?raw=true)
+
 **Unit Test**
 
 X unit
