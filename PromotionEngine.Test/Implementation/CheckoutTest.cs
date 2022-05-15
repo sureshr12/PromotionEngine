@@ -1,9 +1,11 @@
 ﻿namespace PromotionEngine.Test.Implementation
 {
+    using PromotionEngine.Exception;
     using PromotionEngine.Implementation;
     using System.Linq;
     using Xunit;
 
+    [Collection("Sequential")]
     public class CheckoutTest
     {
         private readonly Checkout underTest;
@@ -14,7 +16,7 @@
 
         [Fact]
         public void ScannedItem_ShouldAddToCart_WhenValidProduct()
-        {
+        {           
             underTest.Scan("A");
             Assert.Equal(1, underTest.cart.Products.Count);
             Assert.Equal(50, underTest.cart.Products.Where(x => x.Name.Equals("A")).FirstOrDefault().TotalPrice);
@@ -23,9 +25,8 @@
         [Fact]
         public void ScannedItem_ShouldNotAddToCart_WhenInValidProduct()
         {
-            underTest.Scan("E");
+            Assert.Throws<CartException>(() => underTest.Scan("E"));
             Assert.Equal(0, underTest.cart.Products.Count);
-           
         }
 
         [Fact]
@@ -51,5 +52,6 @@
             Assert.Equal(1, underTest.cart.Products.Where(x => x.Name.Equals("B")).FirstOrDefault().Quantity);
             Assert.Equal(30, underTest.cart.Products.Where(x => x.Name.Equals("B")).FirstOrDefault().TotalPrice);
         }
+       
     }
 }
