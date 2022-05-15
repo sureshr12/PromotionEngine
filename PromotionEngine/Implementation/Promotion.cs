@@ -16,6 +16,7 @@
         public Promotion()
         {
             _rules.Add(new FirstProductRule());
+            _rules.Add(new SecondProductRule());
         }
 
         public Cart Apply(Cart cart)

@@ -45,12 +45,76 @@
             {
                 Products = new List<Product>()
                 {
+                    new Product(){ Name="C", Price=20, Quantity=3}
+                }
+            };
+            var actualCart = underTest.Apply(cart);
+            Assert.Equal(60, actualCart.TotalPrice);
+            Assert.Equal(0, actualCart.DiscountPrice);
+        }
+
+        [Fact]
+        public void SecondProductRuleShouldBeApplied_WhenValidProduct()
+        {
+            cart = new Cart()
+            {
+                Products = new List<Product>()
+                {
                     new Product(){ Name="B", Price=30, Quantity=3}
                 }
             };
             var actualCart = underTest.Apply(cart);
-            Assert.Equal(90, actualCart.TotalPrice);
+            Assert.Equal(75, actualCart.TotalPrice);
+            Assert.Equal(15, actualCart.DiscountPrice);
+        }
+
+        [Fact]
+        public void SecondProductRuleShouldBeApplied_WhenInValidProduct()
+        {
+            cart = new Cart()
+            {
+                Products = new List<Product>()
+                {
+                    new Product(){ Name="D", Price=15, Quantity=3}
+                }
+            };
+            var actualCart = underTest.Apply(cart);
+            Assert.Equal(45, actualCart.TotalPrice);
             Assert.Equal(0, actualCart.DiscountPrice);
+        }
+
+        [Fact]
+        public void BothProductRulesShouldBeApplied_WithDiscountProducts()
+        {
+            cart = new Cart()
+            {
+                Products = new List<Product>()
+                {
+                    new Product(){ Name="A", Price=50, Quantity=3},
+                    new Product(){ Name="B", Price=30, Quantity=3}
+                }
+            };
+            var actualCart = underTest.Apply(cart);
+            Assert.Equal(205, actualCart.TotalPrice);
+            Assert.Equal(35, actualCart.DiscountPrice);
+        }
+
+        [Fact]
+        public void BothProductRulesShouldBeApplied_WithNonDiscountProducts()
+        {
+            cart = new Cart()
+            {
+                Products = new List<Product>()
+                {
+                    new Product(){ Name="A", Price=50, Quantity=3},
+                    new Product(){ Name="B", Price=30, Quantity=3},
+                    new Product(){ Name="C", Price=20, Quantity=2},
+                    new Product(){ Name="D", Price=15, Quantity=1},
+                }
+            };
+            var actualCart = underTest.Apply(cart);
+            Assert.Equal(260, actualCart.TotalPrice);
+            Assert.Equal(35, actualCart.DiscountPrice);
         }
 
     }
