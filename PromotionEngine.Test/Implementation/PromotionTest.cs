@@ -15,7 +15,7 @@
         }
 
         [Fact]
-        public void ScannedItem_ShouldAddToCart_WhenValidProduct()
+        public void ShouldThrowsException_WhenCartIsNull()
         {
             Assert.Throws<CartException>(() => underTest.Apply(new Model.Cart()));
         }
